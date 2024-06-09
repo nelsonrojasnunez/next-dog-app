@@ -2,14 +2,14 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import Page from "../app/page";
 import Navbar from "../app/components/Navbar";
-import Filters from "../app/components/Filters";
+import Selector from "../app/components/Selector";
 import Gallery from "../app/components/Gallery";
 
 describe("Page", () => {
   it("renders a heading", () => {
     render(<Page />);
 
-    const heading = screen.getByRole("heading", { level: 2 });
+    const heading = screen.getByRole("heading", { level: 1 });
 
     expect(heading).toBeInTheDocument();
   });
@@ -23,47 +23,51 @@ describe("Page", () => {
 
   it("renders empty filters", () => {
     render(
-      <Filters breedList={[]} handleLoadDogsImages={() => console.log("")} />
+      <>
+        <Selector
+          label="Choose a breed"
+          data={[]}
+          handleOnChange={() => console.log("")}
+        />
+        <Selector
+          label="Choose a sub breed"
+          data={[]}
+          handleOnChange={() => console.log("")}
+        />
+        <Selector
+          label="Your choices"
+          data={[]}
+          handleOnChange={() => console.log("")}
+        />
+      </>
     );
     expect(screen.getByText(/choose a breed/i)).toBeInTheDocument();
     expect(screen.getByText(/choose a sub breed/i)).toBeInTheDocument();
-    expect(screen.getByText(/your selections/i)).toBeInTheDocument();
+    expect(screen.getByText(/your choices/i)).toBeInTheDocument();
   });
 
   it("renders data in breed filter", () => {
-    const breeds = [{ australian: ["kelpie", "shepherd"] }];
+    const breeds = ["australian"];
     render(
-      <Filters
-        breedList={breeds}
-        handleLoadDogsImages={() => console.log("")}
+      <Selector
+        label="Choose a breed"
+        data={breeds}
+        handleOnChange={() => console.log("")}
       />
     );
-    expect(screen.getByRole("option", "australian").selected).toBe(true);
+    expect(screen.getByText(/australian/i)).toBeInTheDocument();
   });
 
   it("renders data in sub breed filter", () => {
-    const breeds = [{ australian: ["kelpie", "shepherd"] }];
+    const subBreeds = ["kelpie", "shepherd"];
     render(
-      <Filters
-        breedList={breeds}
-        handleLoadDogsImages={() => console.log("")}
+      <Selector
+        label="Choose a sub breed"
+        data={subBreeds}
+        handleOnChange={() => console.log("")}
       />
     );
-
-    expect(screen.getByRole("option", "kelpie").selected).toBe(true);
-  });
-
-  it("renders breed filter no subbreeds", () => {
-    const breeds = [{ australian: [] }];
-    render(
-      <Filters
-        breedList={breeds}
-        handleLoadDogsImages={() => console.log("")}
-      />
-    );
-    const option = screen.getByRole("option", "kelpie");
-
-    expect(option === undefined);
+    expect(screen.getByText(/kelpie/i)).toBeInTheDocument();
   });
 
   it("renders empty gallery", () => {
