@@ -17,7 +17,7 @@ export default function Home() {
       <main className="container">
         <Filters
           breedList={breeds}
-          handleLoadDogsImages={handleLoadDogsImages}
+          handleLoadDogsImages={setDogImages}
         ></Filters>
         <Gallery dogImages={dogImages}></Gallery>
       </main>

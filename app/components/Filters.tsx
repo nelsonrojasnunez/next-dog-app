@@ -104,8 +104,8 @@ const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
       >
         Clear selection
       </button>
-      <button className="" onClick={() => onLoadDogsGallery(selecteds)}>
-        See dogs pictures
+      <button style={{marginLeft: "1em"}} onClick={() => onLoadDogsGallery(selecteds)}>
+        Fetch images
       </button>
     </>
   );
