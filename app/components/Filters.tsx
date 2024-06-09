@@ -2,33 +2,50 @@
 
 import React, { useRef, useState } from "react";
 import { fetchDogs } from "../actions";
+import Selector from "./Selector";
 interface Props {
   breedList: string[];
   handleLoadDogsImages: (data: string[]) => void;
+  handleSetLoading: (status: boolean) => void;
 }
-const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
+const Filters = ({
+  breedList,
+  handleLoadDogsImages,
+  handleSetLoading,
+}: Props) => {
   const [subBreeds, setSubBreeds] = useState<string[]>([]);
   const [selecteds, setSelecteds] = useState<string[]>([]);
-  const breedsRef = useRef<HTMLSelectElement>(null);
-  const subBreedsRef = useRef<HTMLSelectElement>(null);
+
+  const [currBreed, setCurrBreed] = useState("");
+  const [currSubBreed, setCurrSubBreed] = useState("");
 
   const breedsKeys = Object.keys(breedList);
 
-  const handleBreedChange = (selectedBreed: string) => {
+  const handleBreedChange = (selection: string) => {
+    setCurrBreed(selection);
+    setCurrSubBreed("");
     let subBreedsList = [];
-    breedList = Object(breedList)[selectedBreed];
+    breedList = Object(breedList)[selection];
     setSubBreeds(breedList);
   };
 
+  const handleSubBreedChange = (selection: string) => {
+    console.log("handle change", selection);
+    setCurrSubBreed(selection);
+  };
+
   const handleAddSelection = () => {
-    let currentSelection = `${breedsRef.current?.value}/${subBreedsRef.current?.value}`;
+    let currentSelection = `${currBreed}/${currSubBreed}`;
     if (!currentSelection.endsWith("/")) currentSelection += "/";
-    if (currentSelection.length > 1)
+    if (
+      currentSelection.length > 1 &&
+      selecteds.indexOf(currentSelection) === -1
+    )
       setSelecteds([...selecteds, currentSelection]);
   };
 
   const onLoadDogsGallery = async (selecteds: string[]) => {
-    //const selection = selecteds[0] ?? "";
+    handleSetLoading(true);
     let calls: any[] = [];
     selecteds.map((selection) => {
       calls.push(fetchDogs(selection, 5));
@@ -36,79 +53,65 @@ const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
     let data: any[] = [];
     if (calls.length > 0) {
       Promise.all(calls).then((values) => {
-        console.log("###");
-        console.log(values);
         values.map((item) => {
           data = data.concat(item);
         });
-        console.log("**", data, "***");
         handleLoadDogsImages(data);
+        handleSetLoading(false);
       });
     } else {
       handleLoadDogsImages(data);
+      handleSetLoading(false);
     }
-  };
-  const capitalize = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
   return (
     <>
-      {/* <span aria-busy="true">Loading data...</span> */}
-
       <div className="grid">
-        <div>
-          <label htmlFor="breeds">Choose a Breed:</label>
-          <select
-            ref={breedsRef}
-            name="breeds"
-            onChange={(evt) => handleBreedChange(evt.target.value)}
-          >
-            {breedsKeys.map((breed) => (
-              <option key={breed} value={breed}>
-                {capitalize(breed)}
-              </option>
-            ))}
-          </select>
+        <div className="cell">
+          <Selector
+            data={breedsKeys}
+            label="Choose a Breed:"
+            handleOnChange={handleBreedChange}
+          />
         </div>
-        <div>
-          <label htmlFor="sub_breeds">Choose a Sub Breed:</label>
-          <select ref={subBreedsRef} name="sub_breeds">
-            {subBreeds.map((sub) => (
-              <option key={sub} value={sub}>
-                {sub}
-              </option>
-            ))}
-          </select>
+        <div className="cell">
+          <Selector
+            data={subBreeds}
+            label="Choose a Sub Breed:"
+            handleOnChange={handleSubBreedChange}
+          />
         </div>
       </div>
-      <button className="secondary" onClick={() => handleAddSelection()}>
-        Add Selection
-      </button>
       <div className="grid">
-        <div>
-          <label htmlFor="selections">Your Selections</label>
-          <select name="selections" multiple>
-            {selecteds.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
+        <div className="cell">
+          <button
+            className="button is-link"
+            onClick={() => handleAddSelection()}
+          >
+            Add Selection
+          </button>
+        </div>
+      </div>
+
+      <div className="grid">
+        <div className="cell">
+          <Selector data={selecteds} label="Your Choices:" multiple={true} />
         </div>
       </div>
 
       <button
-        className="secondary"
+        className="button is-danger"
         onClick={() => {
           setSelecteds([]);
           handleLoadDogsImages([]);
+          if (subBreeds.length === 0) setCurrSubBreed("");
         }}
       >
         Clear selection
       </button>
       <button
-        style={{ marginLeft: "1em" }}
+        className="button is-link mx-1"
         onClick={() => onLoadDogsGallery(selecteds)}
       >
         Fetch images

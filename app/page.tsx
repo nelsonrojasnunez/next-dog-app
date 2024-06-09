@@ -4,9 +4,10 @@ import Filters from "./components/Filters";
 import Gallery from "./components/Gallery";
 import Navbar from "./components/Navbar";
 import useBreeds from "./hooks/useBreeds";
+import Loading from "./components/Loading";
 
 export default function Home() {
-  const { breeds, error } = useBreeds();
+  const { breeds, error, isLoading, setIsLoading } = useBreeds();
   const [dogImages, setDogImages] = useState<string[]>([]);
   const handleLoadDogsImages = (selecteds: string[]) => {
     setDogImages(selecteds);
@@ -14,13 +15,16 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="container">
-        <Filters
-          breedList={breeds}
-          handleLoadDogsImages={setDogImages}
-        ></Filters>
-        <Gallery dogImages={dogImages}></Gallery>
-      </main>
+
+      <Filters
+        breedList={breeds}
+        handleLoadDogsImages={setDogImages}
+        handleSetLoading={setIsLoading}
+      ></Filters>
+      {isLoading === true && <Loading />}
+
+      <Gallery dogImages={dogImages}></Gallery>
+
       <footer>Create by Nelson Rojas</footer>
     </>
   );

@@ -1,18 +1,13 @@
-import Link from "next/link";
 import { FaDog, FaQuestionCircle } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <nav>
-      <ul>
-        <li>
-          <h2>
-            <Link href="/" className="secondary">
-              <FaDog /> Next Dog App
-            </Link>
-          </h2>
-        </li>
-      </ul>
+    <nav className="navbar" role="navigation" aria-label="main navigation">
+      <div className="navbar-brand">
+        <h1 className="title">
+          <FaDog /> Next Dog App
+        </h1>
+      </div>
     </nav>
   );
 };
