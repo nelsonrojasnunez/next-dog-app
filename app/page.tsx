@@ -14,13 +14,10 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="container">
-        <Filters
-          breedList={breeds}
-          handleLoadDogsImages={setDogImages}
-        ></Filters>
-        <Gallery dogImages={dogImages}></Gallery>
-      </main>
+
+      <Filters breedList={breeds} handleLoadDogsImages={setDogImages}></Filters>
+      <Gallery dogImages={dogImages}></Gallery>
+
       <footer>Create by Nelson Rojas</footer>
     </>
   );

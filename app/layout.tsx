@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "@picocss/pico";
+import "bulma/css/bulma.min.css";
 
 export const metadata: Metadata = {
   title: "Next Dog App",
@@ -13,8 +13,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <meta name="color-scheme" content="light dark" />
-      <body className="container">{children}</body>
+      <body>
+        <section className="section">
+          <div className="container">{children}</div>
+        </section>
+      </body>
     </html>
   );
 }
