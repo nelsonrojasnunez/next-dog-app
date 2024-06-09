@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { fetchDogs } from "../actions";
 interface Props {
   breedList: string[];
-  handleLoadDogsImages: () => void;
+  handleLoadDogsImages: (data: string[]) => void;
 }
 const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
   const [subBreeds, setSubBreeds] = useState<string[]>([]);

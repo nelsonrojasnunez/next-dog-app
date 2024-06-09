@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 
 const useBreeds = () => {
-  const [breeds, setBreeds] = useState([]);
+  const [breeds, setBreeds] = useState<string[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
