@@ -1,4 +1,4 @@
-"use client";
+"use server";
 
 export async function fetchDogs(breeds: string, numberOfDogs: number) {
   try {
