@@ -6,8 +6,13 @@ import Selector from "./Selector";
 interface Props {
   breedList: string[];
   handleLoadDogsImages: (data: string[]) => void;
+  handleSetLoading: (status: boolean) => void;
 }
-const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
+const Filters = ({
+  breedList,
+  handleLoadDogsImages,
+  handleSetLoading,
+}: Props) => {
   const [subBreeds, setSubBreeds] = useState<string[]>([]);
   const [selecteds, setSelecteds] = useState<string[]>([]);
 
@@ -17,7 +22,6 @@ const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
   const breedsKeys = Object.keys(breedList);
 
   const handleBreedChange = (selection: string) => {
-    console.log("handle change", selection);
     setCurrBreed(selection);
     setCurrSubBreed("");
     let subBreedsList = [];
@@ -41,7 +45,7 @@ const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
   };
 
   const onLoadDogsGallery = async (selecteds: string[]) => {
-    //const selection = selecteds[0] ?? "";
+    handleSetLoading(true);
     let calls: any[] = [];
     selecteds.map((selection) => {
       calls.push(fetchDogs(selection, 5));
@@ -49,16 +53,15 @@ const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
     let data: any[] = [];
     if (calls.length > 0) {
       Promise.all(calls).then((values) => {
-        console.log("###");
-        console.log(values);
         values.map((item) => {
           data = data.concat(item);
         });
-        console.log("**", data, "***");
         handleLoadDogsImages(data);
+        handleSetLoading(false);
       });
     } else {
       handleLoadDogsImages(data);
+      handleSetLoading(false);
     }
   };
 
