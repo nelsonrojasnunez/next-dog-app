@@ -10,10 +10,13 @@ const Gallery = ({ dogImages, isLoading = false }: Props) => {
     breedInfo = breedInfo.substring(0, breedInfo.lastIndexOf("/"));
     return breedInfo;
   };
+
   return (
     <>
       <hr />
-      {dogImages.length === 0 && <span>Please add any selection and press "Fetch images" button</span>}
+      {dogImages.length === 0 && (
+        <span>Please add any selection and press "Fetch images" button</span>
+      )}
       {isLoading && <span aria-busy="true">Loading images...</span>}
       <div className="row">
         {dogImages.map((url: string) => (

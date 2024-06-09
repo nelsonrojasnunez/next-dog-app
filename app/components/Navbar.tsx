@@ -13,13 +13,6 @@ const Navbar = () => {
           </h2>
         </li>
       </ul>
-      <ul>
-        <li>
-          <Link href="/about" className="secondary">
-            <FaQuestionCircle /> About
-          </Link>
-        </li>
-      </ul>
     </nav>
   );
 };

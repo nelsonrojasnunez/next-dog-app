@@ -48,6 +48,9 @@ const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
       handleLoadDogsImages(data);
     }
   };
+  const capitalize = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   return (
     <>
@@ -63,7 +66,7 @@ const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
           >
             {breedsKeys.map((breed) => (
               <option key={breed} value={breed}>
-                {breed}
+                {capitalize(breed)}
               </option>
             ))}
           </select>
@@ -104,7 +107,10 @@ const Filters = ({ breedList, handleLoadDogsImages }: Props) => {
       >
         Clear selection
       </button>
-      <button style={{marginLeft: "1em"}} onClick={() => onLoadDogsGallery(selecteds)}>
+      <button
+        style={{ marginLeft: "1em" }}
+        onClick={() => onLoadDogsGallery(selecteds)}
+      >
         Fetch images
       </button>
     </>
