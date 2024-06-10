@@ -25,7 +25,7 @@ export default function Home() {
 
       <Gallery dogImages={dogImages}></Gallery>
 
-      <footer>Create by Nelson Rojas</footer>
+      <footer>Created by Nelson Rojas</footer>
     </>
   );
 }
