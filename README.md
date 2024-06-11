@@ -20,4 +20,4 @@ This file explain the whole process that I follow to create the current app.
 - Populated Components
 - Displaying images
 
-See results from [https://next-dog-pq8sikmrq-nelson-rojas-projects-ea098cc6.vercel.app/](https://next-dog-pq8sikmrq-nelson-rojas-projects-ea098cc6.vercel.app/)
+See results from [next-dog-app.vercel.app](next-dog-app.vercel.app)
