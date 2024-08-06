@@ -7,11 +7,9 @@ import useBreeds from "./hooks/useBreeds";
 import Loading from "./components/Loading";
 
 export default function Home() {
-  const { breeds, error, isLoading, setIsLoading } = useBreeds();
+  const { breeds, isLoading, setIsLoading } = useBreeds();
   const [dogImages, setDogImages] = useState<string[]>([]);
-  const handleLoadDogsImages = (selecteds: string[]) => {
-    setDogImages(selecteds);
-  };
+  
   return (
     <>
       <Navbar />

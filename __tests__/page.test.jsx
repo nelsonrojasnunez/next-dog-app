@@ -1,9 +1,12 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Page from "../app/page";
 import Navbar from "../app/components/Navbar";
 import Selector from "../app/components/Selector";
 import Gallery from "../app/components/Gallery";
+import Loading from "../app/components/Loading";
+import Filters from "../app/components/Filters";
 
 describe("Page", () => {
   it("renders a heading", () => {
@@ -84,4 +87,21 @@ describe("Page", () => {
     );
     expect(screen.getByText(/affenpinscher/i)).toBeInTheDocument();
   });
+
+  it('should render the loading text', () => {
+    render(<Loading />);
+    expect(screen.getByText(/wait/i)).toBeInTheDocument();
+  })
+
+  it('should add an element to the list when user selects one', async () => {
+    //arrange
+    const breeds = ["australian"];
+    
+    render(<Filters breedList={breeds} handleLoadDogsImages={()=>{}} handleSetLoading={()=>{}} />);
+
+    //act
+    const user = userEvent.setup();
+    await user.click();
+    //assert
+  })
 });
