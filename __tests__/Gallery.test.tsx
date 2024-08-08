@@ -1,4 +1,6 @@
-import Gallery, { getBreedInfo } from "@/app/components/Gallery";
+import Gallery from "@/app/components/Gallery";
+import { getBreedInfo } from "@/app/utils/utils";
+
 import { render, screen } from "@testing-library/react";
 
 describe("Gallery", () => {
@@ -15,6 +17,7 @@ describe("Gallery", () => {
       />
     );
     expect(screen.getByText(/affenpinscher/i)).toBeInTheDocument();
+    expect(screen.getAllByRole("img")).toHaveLength(1);
   });
   it("should return a capitalized text from given url", () => {
     const urls = [

@@ -1,16 +1,11 @@
 import classnames from "classnames";
+import { capitalize } from "../utils/utils";
 interface Props {
   data: string[];
   label: string;
   multiple?: boolean;
   handleOnChange?: (selection: string) => void;
 }
-export const capitalize = (str: string) => {
-  str = str.toLowerCase().replace(/\b[a-z]/g, function (letra) {
-    return letra.toUpperCase();
-  });
-  return str;
-};
 
 const Selector = ({
   data,
