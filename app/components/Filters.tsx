@@ -8,7 +8,7 @@ interface Props {
   handleSetLoading: (status: boolean) => void;
 }
 
-export async function fetchDogs(breeds: string, numberOfDogs: number) {
+async function fetchDogs(breeds: string, numberOfDogs: number) {
   try {
     const response = await fetch(
       `https://dog.ceo/api/breed/${breeds}images/random/${numberOfDogs}`
@@ -118,7 +118,7 @@ const Filters = ({
       </div>
 
       <button
-        className="button is-danger"
+        className="button is-info"
         onClick={() => {
           setSelecteds([]);
           handleLoadDogsImages([]);

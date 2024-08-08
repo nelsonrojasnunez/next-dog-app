@@ -8,7 +8,6 @@ const useBreeds = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true)
 
-
   useEffect(() => {
     const controller = new AbortController();
     apiClient
@@ -21,7 +20,7 @@ const useBreeds = () => {
       });
     return () => controller.abort();
   }, []);
-  return { breeds, error, isLoading, setIsLoading };
+  return { breeds, error, isLoading, setIsLoading, setError };
 };
 
 export default useBreeds;

@@ -3,14 +3,15 @@ interface Props {
   dogImages: string[];
   isLoading?: boolean;
 }
-const Gallery = ({ dogImages, isLoading = false }: Props) => {
-  const getBreedInfo = (url: string) => {
-    let breedInfo = url.replace("https://images.dog.ceo/breeds/", "") || "";
-    breedInfo = breedInfo.replaceAll("-", " ");
-    breedInfo = breedInfo.substring(0, breedInfo.lastIndexOf("/"));
-    return capitalize(breedInfo);
-  };
 
+export const getBreedInfo = (url: string) => {
+  let breedInfo = url.replace("https://images.dog.ceo/breeds/", "") || "";
+  breedInfo = breedInfo.replaceAll("-", " ");
+  breedInfo = breedInfo.substring(0, breedInfo.lastIndexOf("/"));
+  return capitalize(breedInfo);
+};
+
+const Gallery = ({ dogImages, isLoading = false }: Props) => {
   return (
     <>
       <hr />

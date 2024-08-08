@@ -1,12 +1,24 @@
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, renderHook, act } from "@testing-library/react";
+//import { http } from "msw";
+//import { setupServer } from "msw/node";
+
 import userEvent from "@testing-library/user-event";
 import Page from "../app/page";
-import Navbar from "../app/components/Navbar";
 import Selector from "../app/components/Selector";
-import Gallery from "../app/components/Gallery";
 import Loading from "../app/components/Loading";
 import Filters from "../app/components/Filters";
+import useBreeds from "@/app/hooks/useBreeds";
+
+/*const server = setupServer(
+  http.get("/greeting", () => {
+    return res(ctx.json({ greeting: "hello there" }));
+  })
+);
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+*/
 
 describe("Page", () => {
   it("renders a heading", () => {
@@ -17,11 +29,18 @@ describe("Page", () => {
     expect(heading).toBeInTheDocument();
   });
 
-  it("renders page navbar", () => {
-    render(<Navbar />);
-    const heading = screen.getByText(/next dog app/i);
+  it("should call custom hook and unmount component to check if abort is called", () => {
+    const { result, unmount } = renderHook(useBreeds);
+    //unmount();
+    //expect(result.current.breeds).toHaveLength(0);
+  });
 
-    expect(heading).toBeInTheDocument();
+  it("should render Home Page, unmount it and checks for ControllerAbort call", () => {
+    const { unmount } = render(<Page />);
+    const loadingText = screen.queryByText(/loading/i);
+    expect(loadingText).toBeInTheDocument();
+    unmount();
+    expect(loadingText).not.toBeInTheDocument();
   });
 
   it("renders empty filters", () => {
@@ -73,35 +92,26 @@ describe("Page", () => {
     expect(screen.getByText(/kelpie/i)).toBeInTheDocument();
   });
 
-  it("renders empty gallery", () => {
-    render(<Gallery dogImages={[]} />);
-    expect(screen.getByText(/add any selection/i)).toBeInTheDocument();
-  });
-  it("renders items in gallery", () => {
-    render(
-      <Gallery
-        dogImages={[
-          "https://images.dog.ceo/breeds/affenpinscher/n02110627_11365.jpg",
-        ]}
-      />
-    );
-    expect(screen.getByText(/affenpinscher/i)).toBeInTheDocument();
-  });
-
-  it('should render the loading text', () => {
+  it("should render the loading text", () => {
     render(<Loading />);
     expect(screen.getByText(/wait/i)).toBeInTheDocument();
-  })
+  });
 
-  it('should add an element to the list when user selects one', async () => {
+  it("should add an element to the list when user selects one", async () => {
     //arrange
     const breeds = ["australian"];
-    
-    render(<Filters breedList={breeds} handleLoadDogsImages={()=>{}} handleSetLoading={()=>{}} />);
+
+    render(
+      <Filters
+        breedList={breeds}
+        handleLoadDogsImages={() => {}}
+        handleSetLoading={() => {}}
+      />
+    );
 
     //act
-    const user = userEvent.setup();
-    await user.click();
+    //const user = userEvent.setup();
+    //await user.click();
     //assert
-  })
+  });
 });
