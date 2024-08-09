@@ -1,18 +1,22 @@
 import classnames from "classnames";
 import { capitalize } from "../utils/utils";
+import { useRef } from "react";
+
 interface Props {
   data: string[];
   label: string;
   multiple?: boolean;
-  handleOnChange?: (selection: string) => void;
+  handleOnChange: (selection: string) => void;
 }
 
 const Selector = ({
   data,
   label,
-  handleOnChange = () => {},
+  handleOnChange,
   multiple = false,
 }: Props) => {
+  const refSelector = useRef<HTMLSelectElement>(null);
+
   return (
     <div className="field">
       <label className="label">{label}</label>
@@ -24,8 +28,10 @@ const Selector = ({
           })}
         >
           <select
+            data-testid="selector"
             multiple={!!multiple}
-            onChange={(evt) => handleOnChange(evt.target.value)}
+            ref={refSelector}
+            onChange={() => handleOnChange(refSelector.current?.value || "")}
           >
             {multiple === false && (
               <option key="no-data" value="">

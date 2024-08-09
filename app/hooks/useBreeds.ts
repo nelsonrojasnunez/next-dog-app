@@ -18,7 +18,10 @@ const useBreeds = () => {
         if (err instanceof CanceledError) return;
         setError(err.message);
       });
-    return () => controller.abort();
+    return () => {
+        controller.abort();
+    };
+
   }, []);
   return { breeds, error, isLoading, setIsLoading, setError };
 };
