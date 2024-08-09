@@ -15,7 +15,7 @@ export const getBreedInfo = (url?: string) => {
 
 export const fetchDogs = async (breed: string, count: number): Promise<string[]> => {
   try {
-    const response = await fetch(`https://dog.ceo/api/breed/${breed}/images/random/${count}`);
+    const response = await fetch(`https://dog.ceo/api/breed/${breed}images/random/${count}`);
     const data = await response.json();
     return data.message;
   } catch (error) {

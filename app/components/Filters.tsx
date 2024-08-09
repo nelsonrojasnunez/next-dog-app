@@ -46,10 +46,10 @@ const Filters = ({
       setSelecteds([...selecteds, currentSelection]);
   };
 
-  const onLoadDogsGallery = async (selecteds: string[]) => {
+  const onLoadDogsGallery = async (selected: string[]) => {
     handleSetLoading(true);
     let calls: any[] = [];
-    selecteds.map((selection) => {
+    selected.map((selection) => {
       calls.push(fetchDogs(selection, 5));
     });
     let data: any[] = [];
