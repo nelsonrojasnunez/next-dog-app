@@ -6,7 +6,7 @@ interface Props {
   data: string[];
   label: string;
   multiple?: boolean;
-  handleOnChange?: (selection: string) => void;
+  handleOnChange: (selection: string) => void;
 }
 
 const Selector = ({ data, label, handleOnChange, multiple = false }: Props) => {

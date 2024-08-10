@@ -98,7 +98,7 @@ const Filters = ({
 
       <div className="grid">
         <div className="cell">
-          <Selector data={selecteds} label="Your Choices:" multiple={true} />
+          <Selector data={selecteds} label="Your Choices:" multiple={true} handleOnChange={()=>{}} />
         </div>
       </div>
 
